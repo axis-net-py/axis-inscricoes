@@ -1,0 +1,1 @@
+export default function Home(){return <main className="wrap"><section className="hero"><div className="eyebrow">Axis Inscrições</div><h1>Inscrições e CRM para treinamentos</h1><p className="muted">Cada evento possui um link próprio. Acesse o formulário usando o endereço fornecido pela organização.</p><a className="button" href="/admin">Área administrativa</a></section></main>}
