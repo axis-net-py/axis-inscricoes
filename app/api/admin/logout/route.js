@@ -1,0 +1,1 @@
+import {NextResponse} from 'next/server';import {COOKIE} from '@/lib/session';export async function POST(req){const res=NextResponse.redirect(new URL('/admin/login',req.url),303);res.cookies.set(COOKIE,'',{httpOnly:true,secure:true,sameSite:'strict',path:'/',maxAge:0});return res;}
