@@ -4,7 +4,7 @@ import fs from 'node:fs';
 
 const crm=fs.readFileSync(new URL('../app/admin/crm/page.js',import.meta.url),'utf8');
 const route=fs.readFileSync(new URL('../app/api/admin/crm/export/route.js',import.meta.url),'utf8');
-const db=fs.readFileSync(new URL('../lib/db.js',import.meta.url),'utf8');
+const exportDb=fs.readFileSync(new URL('../lib/crm-export.js',import.meta.url),'utf8');
 
 test('CRM exposes an XLSX export action that preserves active filters',()=>{
   assert.match(crm,/Exportar planilha/);
@@ -28,8 +28,8 @@ test('CRM export UI lets the user select one or more events',()=>{
   assert.match(crm,/d\.events\.map/);
   assert.match(crm,/Selecionar todos os eventos/);
   assert.match(route,/searchParams\.getAll\('events'\)/);
-  assert.match(db,/eventSlugs/);
-  assert.match(db,/jsonb_array_elements_text/);
+  assert.match(exportDb,/eventSlugs/);
+  assert.match(exportDb,/jsonb_array_elements_text/);
 });
 
 test('export endpoint is authenticated and returns an XLSX attachment',()=>{
@@ -40,8 +40,8 @@ test('export endpoint is authenticated and returns an XLSX attachment',()=>{
 });
 
 test('export queries the complete filtered CRM base rather than current pagination',()=>{
-  assert.match(db,/getCRMExport/);
-  assert.match(route,/getCRMExport/);
+  assert.match(exportDb,/getCRMExportByEvents/);
+  assert.match(route,/getCRMExportByEvents/);
   assert.doesNotMatch(route,/limit:\s*25/);
 });
 
