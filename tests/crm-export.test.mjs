@@ -8,11 +8,22 @@ const db=fs.readFileSync(new URL('../lib/db.js',import.meta.url),'utf8');
 
 test('CRM exposes an XLSX export action that preserves active filters',()=>{
   assert.match(crm,/Exportar planilha/);
-  assert.match(crm,/\/api\/admin\/crm\/export\?/);
+  assert.match(crm,/\/api\/admin\/crm\/export/);
   assert.match(crm,/event/);
   assert.match(crm,/registrationStatus/);
   assert.match(crm,/paymentStatus/);
   assert.match(crm,/paymentMethod/);
+});
+
+test('CRM export UI lets the user choose spreadsheet columns',()=>{
+  assert.match(crm,/Escolha os dados da planilha/);
+  assert.match(crm,/name="columns"/);
+  assert.match(crm,/Selecionar todos/);
+  assert.match(crm,/Limpar seleção/);
+  assert.match(crm,/Gerar XLSX/);
+  for(const key of ['participant','phone','email','company','event','createdAt','registrationStatus','paymentMethod','paymentStatus','amount','currency','paymentCode','proof']){
+    assert.match(crm,new RegExp(`value="${key}"`));
+  }
 });
 
 test('export endpoint is authenticated and returns an XLSX attachment',()=>{
@@ -28,8 +39,10 @@ test('export queries the complete filtered CRM base rather than current paginati
   assert.doesNotMatch(route,/limit:\s*25/);
 });
 
-test('export includes the CRM operational columns',()=>{
-  for(const label of ['Participante','Telefone','E-mail','Empresa','Evento','Data da inscrição','Status da inscrição','Método de pagamento','Status do pagamento','Valor','Moeda','Código do pagamento','Comprovante']){
-    assert.match(route,new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
-  }
+test('export only includes explicitly selected allowed columns',()=>{
+  assert.match(route,/searchParams\.getAll\('columns'\)/);
+  assert.match(route,/COLUMN_DEFINITIONS/);
+  assert.match(route,/selectedColumns/);
+  assert.match(route,/filter\(column=>requested\.includes\(column\.key\)\)/);
+  assert.match(route,/Nenhuma coluna selecionada/);
 });
