@@ -4,7 +4,7 @@ import fs from 'node:fs';
 
 const admin=fs.readFileSync(new URL('../app/admin/page.js',import.meta.url),'utf8');
 const db=fs.readFileSync(new URL('../lib/db.js',import.meta.url),'utf8');
-const css=fs.readFileSync(new URL('../app/globals.css',import.meta.url),'utf8');
+const css=fs.readFileSync(new URL('../app/admin-theme.css',import.meta.url),'utf8');
 
 test('dashboard focuses LAP 18 and hides previous events behind details',()=>{
   assert.match(db,/getDashboard\(currentSlug='lap18'\)/);
