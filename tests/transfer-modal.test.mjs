@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
 const source=fs.readFileSync(new URL('../components/PublicForm.js',import.meta.url),'utf8');
-const css=fs.readFileSync(new URL('../app/globals.css',import.meta.url),'utf8');
+const css=fs.readFileSync(new URL('../app/transfer-modal.css',import.meta.url),'utf8');
 
 test('transfer selection opens a bank-details modal',()=>{
   assert.match(source,/setTransferModalOpen\(e\.target\.value==='transfer'\)/);
