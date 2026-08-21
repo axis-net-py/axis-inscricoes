@@ -1,0 +1,31 @@
+.lap-pricing-head h3:after{content:none!important}
+
+@media(max-width:820px){
+  .event-hero .hero-inner{align-items:center!important;text-align:center!important}
+  .event-hero .hero-copy{width:100%;text-align:center!important}
+  .event-hero .lap-edition{justify-content:center;margin-left:auto;margin-right:auto}
+  .event-hero .hero-copy>.kicker{width:100%;text-align:center}
+  .event-hero .lap-title{width:100%;text-align:center;margin-left:auto;margin-right:auto}
+  .event-hero .lap-title .title-light,.event-hero .lap-title em{display:block;width:100%;text-align:center;margin-left:auto;margin-right:auto}
+  .event-hero .hero-meta{width:100%;justify-items:center;text-align:center}
+  .event-hero .hero-meta p{width:100%;text-align:center}
+  .event-hero .hero-venue{width:100%;justify-content:center;text-align:left}
+
+  .lap-pricing-table-wrap{overflow:visible}
+  .lap-pricing-table{min-width:0!important;width:100%!important;table-layout:fixed}
+  .lap-pricing-table th,.lap-pricing-table td{padding:10px 7px;font-size:10px;white-space:normal;overflow-wrap:anywhere}
+  .lap-pricing-table th:first-child,.lap-pricing-table td:first-child{width:46%;text-align:left}
+  .lap-pricing-table th:nth-child(2),.lap-pricing-table td:nth-child(2){width:22%;text-align:center}
+  .lap-pricing-table th:nth-child(3),.lap-pricing-table td:nth-child(3){width:32%;text-align:right}
+  .lap-pricing-table td strong{font-size:10px;white-space:nowrap}
+  .lap-pricing-table td small{font-size:8px}
+}
+
+@media(max-width:430px){
+  .event-hero .lap-title .title-light{font-size:31px!important;letter-spacing:.5px!important}
+  .event-hero .lap-title em{font-size:47px!important;line-height:1!important}
+  .lap-pricing-panel{padding:18px 14px}
+  .lap-pricing-table th,.lap-pricing-table td{padding:9px 5px;font-size:9.5px}
+  .lap-pricing-highlight{padding:13px 11px}
+  .lap-pricing-highlight strong{font-size:17px}
+}
