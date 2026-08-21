@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&display=swap');
+
+.lap-title .title-light{
+  font-family:'Playfair Display',serif!important;
+  font-size:clamp(31px,4.2vw,48px)!important;
+  font-weight:400!important;
+  letter-spacing:.01em!important;
+  text-transform:none!important;
+  color:#fff!important;
+  line-height:1.05!important;
+}
+.lap-title em{
+  font-family:'Playfair Display',serif!important;
+  font-weight:400!important;
+}
+
+.lap-pricing-desktop{display:none}
+.lap-pricing-mobile{display:block}
+
+.info-panel .lap-pricing-desktop{
+  margin-top:22px;
+  border:1px solid rgba(212,175,55,.38);
+  border-bottom:1px solid rgba(212,175,55,.38);
+  border-left:3px solid var(--gold);
+  padding:18px 16px;
+  box-shadow:none;
+}
+.info-panel .lap-pricing-desktop .lap-pricing-head h3{font-size:18px}
+.info-panel .lap-pricing-desktop .lap-pricing-head p{font-size:12px}
+.info-panel .lap-pricing-desktop .lap-pricing-table{min-width:0;width:100%;table-layout:fixed}
+.info-panel .lap-pricing-desktop .lap-pricing-table th,
+.info-panel .lap-pricing-desktop .lap-pricing-table td{padding:9px 8px;font-size:10px}
+.info-panel .lap-pricing-desktop .lap-pricing-table th:first-child,
+.info-panel .lap-pricing-desktop .lap-pricing-table td:first-child{width:45%}
+.info-panel .lap-pricing-desktop .lap-pricing-highlight{margin-top:12px;padding:12px}
+.info-panel .lap-pricing-desktop .lap-pricing-highlight strong{font-size:16px}
+
+@media(min-width:821px){
+  .lap-pricing-desktop{display:block}
+  .lap-pricing-mobile{display:none}
+}
+
+@media(max-width:520px){
+  .lap-title .title-light{
+    font-size:clamp(28px,8vw,34px)!important;
+  }
+}
