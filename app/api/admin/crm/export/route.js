@@ -6,6 +6,7 @@ export const runtime='nodejs';
 function statusLabel(value){const map={new:'Novo',confirmed:'Confirmado',pending:'Pendente',cancelled:'Cancelado',published:'Publicado'};return map[value]||value||'—';}
 function methodLabel(value){if(value==='transfer')return 'Transferência';if(value==='cash')return 'Dinheiro em espécie';return '—';}
 function safeFilenamePart(value){return String(value||'crm').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'-').replace(/^-+|-+$/g,'').toLowerCase()||'crm';}
+function yesNo(value){return value?'Sim':'Não';}
 const COLUMN_DEFINITIONS=[
  {header:'Participante',key:'participant',width:30,value:r=>[r.first_name,r.last_name].filter(Boolean).join(' ')},
  {header:'Telefone',key:'phone',width:20,value:r=>r.phone||'',numFmt:'@'},
@@ -14,6 +15,10 @@ const COLUMN_DEFINITIONS=[
  {header:'Evento',key:'event',width:34,value:r=>r.event_name||''},
  {header:'Data da inscrição',key:'createdAt',width:20,value:r=>r.created_at?new Date(r.created_at):null,numFmt:'dd/mm/yyyy hh:mm'},
  {header:'Status da inscrição',key:'registrationStatus',width:22,value:r=>statusLabel(r.status)},
+ {header:'Assistência / acessibilidade',key:'accessibility',width:24,value:r=>yesNo(r.accessibility_required)},
+ {header:'Detalhes de assistência',key:'accessibilityDetails',width:42,value:r=>r.accessibility_details||''},
+ {header:'Restrição alimentar',key:'dietaryRestriction',width:34,value:r=>r.dietary_restriction||''},
+ {header:'Detalhes da restrição alimentar',key:'dietaryRestrictionOther',width:42,value:r=>r.dietary_restriction_other||''},
  {header:'Método de pagamento',key:'paymentMethod',width:24,value:r=>methodLabel(r.payment_method)},
  {header:'Status do pagamento',key:'paymentStatus',width:22,value:r=>statusLabel(r.payment_status)},
  {header:'Valor',key:'amount',width:15,value:r=>r.amount==null?'':Number(r.amount),numFmt:'#,##0.00'},
