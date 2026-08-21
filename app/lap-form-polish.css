@@ -41,7 +41,22 @@
 }
 
 @media(max-width:520px){
-  .lap-title .title-light{
-    font-size:clamp(28px,8vw,34px)!important;
-  }
+  .event-wrap{width:min(100% - 12px,720px)!important}
+  .content-grid{padding-left:0!important;padding-right:0!important}
+  .form-toolbar,.form-card{padding-left:16px!important;padding-right:16px!important}
+  .lap-title .title-light{font-size:clamp(28px,8vw,34px)!important}
+  .lap-pricing-mobile{margin-left:-6px;margin-right:-6px}
+  .lap-pricing-mobile .lap-pricing-panel{padding:18px 12px}
+  .lap-pricing-mobile .lap-pricing-table-wrap{overflow:visible}
+  .lap-pricing-mobile .lap-pricing-table{width:100%;min-width:0;table-layout:fixed}
+  .lap-pricing-mobile .lap-pricing-table th,
+  .lap-pricing-mobile .lap-pricing-table td{padding:10px 8px;font-size:10.5px;word-break:normal;overflow-wrap:normal}
+  .lap-pricing-mobile .lap-pricing-table th:first-child,
+  .lap-pricing-mobile .lap-pricing-table td:first-child{width:44%}
+  .lap-pricing-mobile .lap-pricing-table th:nth-child(2),
+  .lap-pricing-mobile .lap-pricing-table td:nth-child(2){width:22%;white-space:nowrap}
+  .lap-pricing-mobile .lap-pricing-table th:nth-child(3),
+  .lap-pricing-mobile .lap-pricing-table td:nth-child(3){width:34%;white-space:nowrap}
+  .lap-pricing-mobile .lap-pricing-highlight{padding:14px 12px;gap:10px}
+  .lap-pricing-mobile .lap-pricing-highlight strong{font-size:17px}
 }
