@@ -13,11 +13,24 @@ export async function POST(request){
     if(!event) return NextResponse.json({error:'Evento no disponible.'},{status:404});
     const check=validateRegistration(input);
     if(!check.valid) return NextResponse.json({error:'Revisa los campos obligatorios.',fields:check.errors},{status:400});
+    const photo=form.get('personalPhoto');
+    const hasPhotoField=event.fields.some(field=>field.field_key==='personal_photo');
+    const hasConsentField=event.fields.some(field=>field.field_key==='social_media_consent');
+    if(hasConsentField && !['true','on'].includes(String(input.socialMediaConsent))) return NextResponse.json({error:'Autoriza o uso da foto para concluir a inscrição.',fields:{socialMediaConsent:'required'}},{status:400});
+    let photoUrl=null,photoFilename=null;
+    if(hasPhotoField){
+      if(!photo||typeof photo!=='object'||photo.size<=0) return NextResponse.json({error:'Envie sua foto pessoal.',fields:{personalPhoto:'required'}},{status:400});
+      if(photo.size>10*1024*1024) return NextResponse.json({error:'A foto supera 10 MB.',fields:{personalPhoto:'max_size'}},{status:400});
+      if(!['image/jpeg','image/png','image/webp'].includes(photo.type)) return NextResponse.json({error:'A foto deve estar em JPG, PNG ou WEBP.',fields:{personalPhoto:'invalid_type'}},{status:400});
+      const blob=await put(`social/${event.slug}/${randomUUID()}-${photo.name}`,photo,{access:'public',addRandomSuffix:true});
+      photoUrl=blob.url;photoFilename=photo.name;
+    }
     const pay=validatePaymentInput(input);
     if(!pay.valid) return NextResponse.json({error:'Revisa los datos de pago.',fields:pay.errors},{status:400});
     const sql=db();
     const contacts=await sql`INSERT INTO contacts(first_name,last_name,phone,company,role_title) VALUES(${String(input.firstName).trim()},${String(input.lastName).trim()},${check.phone},${String(input.company).trim()},${String(input.roleTitle).trim()}) ON CONFLICT(phone) DO UPDATE SET first_name=EXCLUDED.first_name,last_name=EXCLUDED.last_name,company=EXCLUDED.company,role_title=EXCLUDED.role_title,updated_at=now() RETURNING id`;
-    const regs=await sql`INSERT INTO registrations(event_id,contact_id,status,expectation,discovery_source,discovery_source_other,accessibility_required,accessibility_details,dietary_restriction,dietary_restriction_other,terms_accepted,utm_source,utm_medium,utm_campaign,utm_content,utm_term,referrer,answers) VALUES(${event.id},${contacts[0].id},'new',${String(input.expectation||'')},${String(input.discoverySource||'')},${String(input.discoverySourceOther||'')},${String(input.accessibility||'').toLowerCase().startsWith('s')},${String(input.accessibilityDetails||'')},${String(input.dietaryRestriction||'')},${String(input.dietaryRestrictionOther||'')},true,${String(input.utm_source||'')},${String(input.utm_medium||'')},${String(input.utm_campaign||'')},${String(input.utm_content||'')},${String(input.utm_term||'')},${String(input.referrer||'')},${JSON.stringify({language:String(input.language||'es'),paymentScope:pay.paymentScope})}::jsonb) ON CONFLICT(event_id,contact_id) DO UPDATE SET expectation=EXCLUDED.expectation,discovery_source=EXCLUDED.discovery_source,discovery_source_other=EXCLUDED.discovery_source_other,accessibility_required=EXCLUDED.accessibility_required,accessibility_details=EXCLUDED.accessibility_details,dietary_restriction=EXCLUDED.dietary_restriction,dietary_restriction_other=EXCLUDED.dietary_restriction_other,terms_accepted=true,answers=EXCLUDED.answers,updated_at=now() RETURNING id`;
+    const answers={language:String(input.language||'es'),paymentScope:pay.paymentScope,socialMediaConsent:Boolean(input.socialMediaConsent),photoUrl,photoFilename};
+    const regs=await sql`INSERT INTO registrations(event_id,contact_id,status,expectation,discovery_source,discovery_source_other,accessibility_required,accessibility_details,dietary_restriction,dietary_restriction_other,terms_accepted,utm_source,utm_medium,utm_campaign,utm_content,utm_term,referrer,answers) VALUES(${event.id},${contacts[0].id},'new',${String(input.expectation||'')},${String(input.discoverySource||'')},${String(input.discoverySourceOther||'')},${String(input.accessibility||'').toLowerCase().startsWith('s')},${String(input.accessibilityDetails||'')},${String(input.dietaryRestriction||'')},${String(input.dietaryRestrictionOther||'')},true,${String(input.utm_source||'')},${String(input.utm_medium||'')},${String(input.utm_campaign||'')},${String(input.utm_content||'')},${String(input.utm_term||'')},${String(input.referrer||'')},${JSON.stringify(answers)}::jsonb) ON CONFLICT(event_id,contact_id) DO UPDATE SET expectation=EXCLUDED.expectation,discovery_source=EXCLUDED.discovery_source,discovery_source_other=EXCLUDED.discovery_source_other,accessibility_required=EXCLUDED.accessibility_required,accessibility_details=EXCLUDED.accessibility_details,dietary_restriction=EXCLUDED.dietary_restriction,dietary_restriction_other=EXCLUDED.dietary_restriction_other,terms_accepted=true,answers=EXCLUDED.answers,updated_at=now() RETURNING id`;
 
     let group;
     if(pay.joiningExisting){
