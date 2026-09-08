@@ -22,7 +22,7 @@ export default async function EventPage({ params }) {
       ? [
           ...e.fields,
           ...(!configuredKeys.has("personal_photo")
-            ? [{ id: "personal-photo", field_key: "personal_photo", label_es: "Foto personal", label_pt: "Foto pessoal", help_text_es: "Foto para la campaña #euvou. JPG, PNG o WEBP hasta 10 MB.", help_text_pt: "Foto para a campanha #euvou. JPG, PNG ou WEBP até 10 MB." }]
+            ? [{ id: "personal-photo", field_key: "personal_photo", label_es: "Foto personal #euvou", label_pt: "Foto pessoal #euvou", help_text_es: "Foto para la campaña #euvou. JPG, PNG o WEBP hasta 10 MB.", help_text_pt: "Foto para a campanha #euvou. JPG, PNG ou WEBP até 10 MB." }]
             : []),
           ...(!configuredKeys.has("social_media_consent")
             ? [{ id: "social-consent", field_key: "social_media_consent", label_es: "Autorización de uso de imagen", label_pt: "Autorização de uso da imagem", help_text_es: "Autorizo el uso de mi foto en las redes sociales para divulgar la inmersión.", help_text_pt: "Autorizo o uso da minha foto nas redes sociais para divulgar a imersão." }]
