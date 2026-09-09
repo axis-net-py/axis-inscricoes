@@ -56,7 +56,7 @@ export default async function EventPage({ params }) {
             )}
             <div className="hero-meta">
               <p>
-                <strong>15, 16 e 17</strong> de setembro de 2026
+                <strong>16, 17 e 18</strong> de setembro de 2026
               </p>
               <a
                 className="hero-venue"
