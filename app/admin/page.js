@@ -8,7 +8,7 @@ function PaymentCell({r}){
   const hasProof=Boolean(r.group_proof_url||r.legacy_proof_url);
   return <div className="admin-payment"><strong>{r.payment_status||'—'}</strong><span>{method}{r.payment_code?` · ${r.payment_code}`:''}</span>{r.expected_participants>1&&<small>{r.expected_participants} participantes</small>}{hasProof?<a className="proof-link" href={`/api/admin/proof?registrationId=${encodeURIComponent(r.id)}`} target="_blank" rel="noopener noreferrer">Ver comprovante ↗</a>:r.payment_method==='cash'?<small>Comprovante não aplicável</small>:null}</div>
 }
-function PhotoCell({r}){return r.photo_url?<a className="proof-link" href={r.photo_url} target="_blank" rel="noopener noreferrer" download>Baixar foto #euvou ↗</a>:<small>Sem foto</small>}
+function PhotoCell({r}){return r.photo_url?<a className="proof-link" href={`/api/admin/photo?registrationId=${encodeURIComponent(r.id)}`} target="_blank" rel="noopener noreferrer" download>Baixar arte #euvou ↗</a>:<small>Sem foto</small>}
 
 export default async function Admin(){
   const jar=await cookies();
