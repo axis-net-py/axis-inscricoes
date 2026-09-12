@@ -1,0 +1,47 @@
+/* Contain wide data tables locally and keep admin controls usable by touch. */
+.admin-shell :where(section, form, label, nav, header, article),
+.admin-top-inner > *, .admin-crm-head > *, .admin-panel-head > * { min-width: 0; }
+.admin-shell .adminnav { flex-wrap: wrap; overflow: visible; gap: 8px; }
+.adminnav a, .admin-logout, .admin-filter-submit, .admin-filter-clear,
+.admin-export-xlsx, .admin-export-generate, .admin-export-toolbar button,
+.admin-text-link, .proof-link, .admin-pagination a { min-height: 44px; }
+.adminnav a, .admin-text-link, .proof-link, .admin-pagination a { display: inline-flex; align-items: center; }
+.admin-filters input, .admin-filters select { font-size: 16px; min-height: 48px; }
+.admin-export-grid input { min-height: 20px; width: 20px; height: 20px; flex: 0 0 20px; }
+.admin-panel-actions, .admin-export-toolbar > div { flex-wrap: wrap; }
+.admin-table-wrap, .admin-archive-body { max-width: 100%; overscroll-behavior-x: contain; }
+.admin-pagination { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 16px; align-items: center; }
+.admin-pagination > :last-child { justify-self: end; }
+.admin-export-panel { scroll-margin-top: 180px; }
+/* Each record reads vertically on small screens; desktop retains the table. */
+@media (max-width: 1023px) {
+  .admin-shell .admin-table { min-width: 0; width: 100%; }
+  .admin-shell .admin-table-wrap, .admin-shell .admin-archive-body { overflow: visible; }
+  .admin-shell .admin-table thead {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap;
+  }
+  .admin-shell .admin-table tbody { display: grid; gap: 16px; padding: 16px; }
+  .admin-shell .admin-table tbody tr {
+    display: grid; min-width: 0; padding: 4px 16px;
+    border: 1px solid #dce1e5; border-radius: 8px; background: #fff;
+  }
+  .admin-shell .admin-table td { display: block; min-width: 0; padding: 12px 0; }
+  .admin-shell .admin-table td:last-child { border-bottom: 0; }
+  .admin-shell .admin-table td::before {
+    content: attr(data-label); display: block; margin-bottom: 6px;
+    color: #586773; font-size: 12px; font-weight: 600;
+  }
+  .admin-shell .proof-link { max-width: 100%; width: auto; }
+  .admin-shell .admin-row-actions { align-items: stretch; flex-direction: column; gap: 8px; }
+}
+@media (max-width: 560px) {
+  .admin-filter-wide { grid-column: auto; }
+  .admin-crm-head, .admin-export-panel, .admin-filter-panel,
+  .admin-panel-head, .admin-hero { padding: 22px 16px; }
+  .admin-crm-head h1, .admin-hero h1 { font-size: clamp(28px, 8vw, 36px); }
+  .admin-panel-head h2, .admin-export-panel h2 { font-size: 25px; line-height: 1.25; }
+  .admin-crm-head-actions { gap: 20px; }
+  .admin-top { position: static; }
+  .admin-export-panel { scroll-margin-top: 16px; }
+}

@@ -4,5 +4,7 @@ import './admin-theme.css';
 import './admin-crm.css';
 import './lap-form-polish.css';
 import './lap-responsive-fixes.css';
+import './mobile-layout.css';
+import './admin-light.css';
 export const metadata={title:'Axis Inscrições',description:'Plataforma de inscrições e CRM de treinamentos'};
 export default function RootLayout({children}){return <html lang="es"><body>{children}</body></html>}
